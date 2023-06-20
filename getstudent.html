@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body{
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuw_C9TmXXBy-9q5UZdv3jxslpK9qn_bBmiA&usqp=CAU');
+  background-repeat: no-repeat;
+    background-size: 1950px 980px;
+	text-align: center;
+	font-size:30px;
+}
+table{
+border-collapse: collapse;
+border-style:solid;
+font-size: 25px;  
+width:75%;
+}
+table,th,td{
+text-align: center;  
+margin-left: auto;  
+margin-right: auto;  
+
+}
+input,button{
+background-color:#D4FAFA;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>course management system</title>
+	
+    <script>
+        url="http://127.0.0.1:2020/Student/getStudents";
+        data= ''
+        $.ajax({
+        type:"GET",
+        url:url,
+        data:data,
+        success:"",
+        }).done(function(data){
+        console.log("Succes data:",data,data.data.length)
+        results=data.data;
+        let table="<table border=1 >";
+        table+=`<tr>
+        <td>S.No.</td>
+        <td>Course Name</td>
+        <td>Course ID</td>
+        <td>Contact</td>
+        <td>Course fee</td>
+        <td>Edit Course</td>
+        <td>Delete Course</td>
+        </tr>`;
+        for(let i=0;i<data.data.length;i++){
+        console.log(results[i].firstName)
+        table+=`<tr>
+        <td>${(1+i)}</td>
+        <td>${results[i].firstName}</td>
+        <td>${results[i].lastName}</td>
+        <td>${results[i].email}</td>
+        <td>${results[i].mobileNumber}</td>
+        <td><!--<input type="button" value="Edit" onclick="editStudent('${results[i]._id}')">--><button class="btn" value="Edit" onclick="editStudent('${results[i]._id}')"><i class="fa fa-edit"></i></button></td>
+        <td><!--<input type="button" value="Delete" onclick="deletestudent('${results[i]._id}')">--><button class="btn" value="Delete" onclick="deletestudent('${results[i]._id}')"><i class="fa fa-trash"></i></button></td>
+        </tr>`;
+        }
+        table+="</table>";
+        console.log(table);
+        $('#gstu').html(table);
+        });
+    
+    
+        function editStudent(id){
+            window.open(`edit.html?id=${id}`);
+        }
+        function deletestudent(id)
+        {
+            alert(id);
+            let url=`http://127.0.0.1:2020/Student/deleteByID/${id}`;
+            let data={};
+            let success=""
+            $.ajax({
+                type:"DELETE",
+                url:url,
+                data:data,
+                success:success,
+            }).done(function(data){
+                console.log("deleted succesful...");
+                window.open(`getstudent.html`,"_blank");
+            });    
+        }
+        </script>
+</head>
+<body>
+    <a href="registration.html">ADD COURSE</a>
+    <br>
+    <br>
+	<h2>COURSE DETAILS</h2>
+    <div id="gstu"></div>
+</body>
+</html>

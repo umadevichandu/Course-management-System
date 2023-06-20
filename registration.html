@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>course management system</title>
+<style>
+body{
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuw_C9TmXXBy-9q5UZdv3jxslpK9qn_bBmiA&usqp=CAU');
+  background-repeat: no-repeat;
+    background-size: 1950px 980px;
+	text-align:center;
+}
+form{
+font-size:40px;
+}
+input{
+font-size:20px;
+}
+a{
+font-size:30px;
+color:#8B008B;
+}
+</style>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <script src="manage.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>Document</title>
+    <script>
+        $(document).ready(function(){
+            $("#Submit").click(function()
+            {
+                let url="http://localhost:2020/Student/createStudent";
+                let fname=$("#fname").val();
+                let lname=$("#lname").val();
+                let email=$("#email").val();
+                let mob=$("#mob").val();
+                let pwd=$("#pwd").val();
+                let data={
+                    "firstName":fname,
+                    "lastName":lname,
+                    "email":email,
+                    "mobileNumber":mob,
+                    "password":pwd,
+                };
+
+                $.ajax({
+                    type:"POST",
+                    url:url,
+                    data:data,
+                    success:"",
+                }).done(function(data)
+                {
+                    alert("success....");
+                    console.log("Succes data:",data);
+                    window.open(`getstudent.html`)
+                });
+            });
+        });
+    </script>
+    
+    
+</head>
+<body>
+    <a href="getstudent.html">VIEW COURSES</a>
+    <br>
+    <br>
+	<h1>ADD COURSE</h1>
+    <div id="cstu">
+    <form action="#">
+       <input type="text" name="firstName" placeholder="Course name" id="fname"><br><br>
+        <input type="text" name="lastName" placeholder="Course ID" id="lname"><br><br>
+        <input type="text" name="email" placeholder="Course head mail" id="email"><br><br>
+        <input type="text" name="MobileNumber" placeholder="Course Fee" id="mob"><br><br>
+        <input type="text" name="password" placeholder="Course duration(weeks)" id="pwd"><br><br>
+        <input type="button" value="Submit" id="Submit"><br><br>
+    </form>
+    </div>
+    
+
+</body>
+</html>
